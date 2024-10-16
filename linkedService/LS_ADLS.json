@@ -1,12 +1,22 @@
 {
 	"name": "LS_ADLS",
-	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
 			"url": "https://pkadlsdevoct.dfs.core.windows.net/",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDk2MkJBM0EzLUU0QjItNDA5RC04RDc2LTQ0QTc1OEJDNEU2RV9mMzU1MWMxYS1hMGNkLTRkN2EtOWVmYy03MzlkMmQ5NzMzODQiDQp9"
+			"tenant": "365f9e8e-ed76-43af-a4bf-2f78e2951c82",
+			"servicePrincipalId": "fb191672-b489-45fb-81cb-2fda0d22047a",
+			"servicePrincipalCredentialType": "ServicePrincipalKey",
+			"servicePrincipalCredential": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "LS_AKV",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "serviceprinciplekey"
+			}
 		}
-	}
+	},
+	"type": "Microsoft.DataFactory/factories/linkedservices"
 }
