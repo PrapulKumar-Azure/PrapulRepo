@@ -4,6 +4,12 @@
 	"parameters": {
 		"factoryName": {
 			"value": "PK-DEV-ADF-OCT"
+		},
+		"LS_ADLS_accountKey": {
+			"value": ""
+		},
+		"LS_ADLS_properties_typeProperties_url": {
+			"value": "https://pkadlsdevoct.dfs.core.windows.net/"
 		}
 	}
 }
