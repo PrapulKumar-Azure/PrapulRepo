@@ -1,0 +1,9 @@
+{
+	"name": "PK-DEV-ADF-OCT",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b506dc99-cbd0-4f33-97de-575e4f260f52",
+		"tenantId": "365f9e8e-ed76-43af-a4bf-2f78e2951c82"
+	}
+}
