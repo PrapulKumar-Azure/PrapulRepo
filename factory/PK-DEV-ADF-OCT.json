@@ -9,6 +9,10 @@
 			"tenantid": {
 				"type": "string",
 				"value": "adfgh"
+			},
+			"servicePrincipleId": {
+				"type": "string",
+				"value": "1234"
 			}
 		}
 	},
