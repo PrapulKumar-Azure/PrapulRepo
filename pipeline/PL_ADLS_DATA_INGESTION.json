@@ -1,0 +1,236 @@
+{
+	"name": "PL_ADLS_DATA_INGESTION",
+	"properties": {
+		"activities": [
+			{
+				"name": "READ_EXTRACT_DATA_CONFIG",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"dataset": {
+						"referenceName": "DS_ADLS_JSON",
+						"type": "DatasetReference",
+						"parameters": {
+							"datalakeUrl": {
+								"value": "@pipeline().globalParameters.datalakeUrl",
+								"type": "Expression"
+							},
+							"tenantId": {
+								"value": "@pipeline().globalParameters.tenantid",
+								"type": "Expression"
+							},
+							"servicePrincipleId": {
+								"value": "@pipeline().globalParameters.servicePrincipleId",
+								"type": "Expression"
+							},
+							"secretName": {
+								"value": "@pipeline().globalParameters.secretName",
+								"type": "Expression"
+							},
+							"containerName": {
+								"value": "@pipeline().globalParameters.containerName",
+								"type": "Expression"
+							},
+							"folderPath": {
+								"value": "@pipeline().parameters.extractDataConfigPath",
+								"type": "Expression"
+							},
+							"fileName": {
+								"value": "@pipeline().parameters.extractDataFileName",
+								"type": "Expression"
+							}
+						}
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "FILTER_CSV_FILE_BASED_COPY",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "READ_EXTRACT_DATA_CONFIG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('READ_EXTRACT_DATA_CONFIG').output.value",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@and(equals(item().isFile,'true'),equals(item().fileType,'csv'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "FILTER_JSON_FILE_BASED_COPY",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "READ_EXTRACT_DATA_CONFIG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('READ_EXTRACT_DATA_CONFIG').output.value",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@and(equals(item().isFile,'true'),equals(item().fileType,'json'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "FILTER_FOLDER_BASED_COPY",
+				"type": "Filter",
+				"dependsOn": [
+					{
+						"activity": "READ_EXTRACT_DATA_CONFIG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('READ_EXTRACT_DATA_CONFIG').output.value",
+						"type": "Expression"
+					},
+					"condition": {
+						"value": "@equals(item().isFile,'false')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "ITERATE_FOLDERS",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FILTER_FOLDER_BASED_COPY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FILTER_FOLDER_BASED_COPY').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "COPY_FOLDER",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "ITERATE_CSV_FILES",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FILTER_CSV_FILE_BASED_COPY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FILTER_CSV_FILE_BASED_COPY').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "COPY_CSV_FILES",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "ITERATE_JSON_FILES",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "FILTER_JSON_FILE_BASED_COPY",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('FILTER_JSON_FILE_BASED_COPY').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "COPY_JSON_FILES",
+							"type": "Wait",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"waitTimeInSeconds": 1
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"extractDataConfigPath": {
+				"type": "string"
+			},
+			"extractDataFileName": {
+				"type": "string"
+			}
+		},
+		"annotations": []
+	}
+}
