@@ -21,6 +21,10 @@
 			"connectorConfigPath": {
 				"type": "string",
 				"value": "asdfgh"
+			},
+			"containerName": {
+				"type": "string",
+				"value": "wert"
 			}
 		}
 	},
