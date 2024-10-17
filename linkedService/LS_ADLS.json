@@ -1,12 +1,26 @@
 {
 	"name": "LS_ADLS",
 	"properties": {
+		"parameters": {
+			"datalakeUrl": {
+				"type": "string"
+			},
+			"tenantId": {
+				"type": "string"
+			},
+			"servicePrincipleId": {
+				"type": "string"
+			},
+			"secretName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "AzureBlobFS",
 		"typeProperties": {
-			"url": "https://pkadlsdevoct.dfs.core.windows.net/",
-			"tenant": "365f9e8e-ed76-43af-a4bf-2f78e2951c82",
-			"servicePrincipalId": "fb191672-b489-45fb-81cb-2fda0d22047a",
+			"url": "@{linkedService().datalakeUrl}",
+			"tenant": "@{linkedService().tenantId}",
+			"servicePrincipalId": "@{linkedService().servicePrincipleId}",
 			"servicePrincipalCredentialType": "ServicePrincipalKey",
 			"servicePrincipalCredential": {
 				"type": "AzureKeyVaultSecret",
@@ -14,7 +28,10 @@
 					"referenceName": "LS_AKV",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "serviceprinciplekey"
+				"secretName": {
+					"value": "@linkedService().secretName",
+					"type": "Expression"
+				}
 			}
 		}
 	},
