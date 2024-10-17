@@ -17,6 +17,10 @@
 			"secretName": {
 				"type": "string",
 				"value": "xyzxcv"
+			},
+			"connectorConfigPath": {
+				"type": "string",
+				"value": "asdfgh"
 			}
 		}
 	},
