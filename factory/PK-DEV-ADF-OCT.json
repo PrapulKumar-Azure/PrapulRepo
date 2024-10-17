@@ -1,5 +1,13 @@
 {
 	"name": "PK-DEV-ADF-OCT",
+	"properties": {
+		"globalParameters": {
+			"datalakeUrl": {
+				"type": "string",
+				"value": "acv"
+			}
+		}
+	},
 	"location": "eastus",
 	"identity": {
 		"type": "SystemAssigned",
