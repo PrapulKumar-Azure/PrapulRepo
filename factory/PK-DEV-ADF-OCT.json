@@ -13,6 +13,10 @@
 			"servicePrincipleId": {
 				"type": "string",
 				"value": "1234"
+			},
+			"secretName": {
+				"type": "string",
+				"value": "xyzxcv"
 			}
 		}
 	},
