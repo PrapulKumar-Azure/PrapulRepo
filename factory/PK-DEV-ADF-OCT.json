@@ -18,13 +18,17 @@
 				"type": "string",
 				"value": "xyzxcv"
 			},
-			"connectorConfigPath": {
-				"type": "string",
-				"value": "asdfgh"
-			},
 			"containerName": {
 				"type": "string",
 				"value": "wert"
+			},
+			"connectorConfigPath": {
+				"type": "string",
+				"value": "asert"
+			},
+			"connectorConfigFileName": {
+				"type": "string",
+				"value": "swqer"
 			}
 		}
 	},
