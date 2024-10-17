@@ -1,0 +1,74 @@
+{
+	"name": "DS_ADLS_CSV",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_ADLS",
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"datalakeUrl": {
+					"value": "@dataset().datalakeUrl",
+					"type": "Expression"
+				},
+				"tenantId": {
+					"value": "@dataset().tenantId",
+					"type": "Expression"
+				},
+				"servicePrincipleId": {
+					"value": "@dataset().servicePrincipleId",
+					"type": "Expression"
+				},
+				"secretName": {
+					"value": "@dataset().secretName",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"datalakeUrl": {
+				"type": "string"
+			},
+			"tenantId": {
+				"type": "string"
+			},
+			"servicePrincipleId": {
+				"type": "string"
+			},
+			"secretName": {
+				"type": "string"
+			},
+			"containerName": {
+				"type": "string"
+			},
+			"folderPath": {
+				"type": "string"
+			},
+			"fileName": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().fileName",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folderPath",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "@dataset().containerName",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
