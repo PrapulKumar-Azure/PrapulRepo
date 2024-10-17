@@ -5,6 +5,10 @@
 			"datalakeUrl": {
 				"type": "string",
 				"value": "acv"
+			},
+			"tenantid": {
+				"type": "string",
+				"value": "adfgh"
 			}
 		}
 	},
