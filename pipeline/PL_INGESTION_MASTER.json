@@ -110,7 +110,7 @@
 				}
 			},
 			{
-				"name": "FILTER_SHAREPOINT_SOURCES",
+				"name": "FILTER_SFTP_SOURCES",
 				"type": "Filter",
 				"dependsOn": [
 					{
@@ -179,11 +179,11 @@
 				}
 			},
 			{
-				"name": "FILTER_ISCONNECTOR_ACTIVE_SHAREPOINT_SOURCES",
+				"name": "FILTER_ISCONNECTOR_ACTIVE_SFTP_SOURCES",
 				"type": "Filter",
 				"dependsOn": [
 					{
-						"activity": "FILTER_SHAREPOINT_SOURCES",
+						"activity": "FILTER_SFTP_SOURCES",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -192,7 +192,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('FILTER_SHAREPOINT_SOURCES').output.value",
+						"value": "@activity('FILTER_SFTP_SOURCES').output.value",
 						"type": "Expression"
 					},
 					"condition": {
@@ -258,11 +258,11 @@
 				}
 			},
 			{
-				"name": "ITERATE_SHAREPOINT_SOURCES",
+				"name": "ITERATE_SFTP_SOURCES",
 				"type": "ForEach",
 				"dependsOn": [
 					{
-						"activity": "FILTER_ISCONNECTOR_ACTIVE_SHAREPOINT_SOURCES",
+						"activity": "FILTER_ISCONNECTOR_ACTIVE_SFTP_SOURCES",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -271,7 +271,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"items": {
-						"value": "@activity('FILTER_ISCONNECTOR_ACTIVE_SHAREPOINT_SOURCES').output.value",
+						"value": "@activity('FILTER_ISCONNECTOR_ACTIVE_SFTP_SOURCES').output.value",
 						"type": "Expression"
 					}
 				}
